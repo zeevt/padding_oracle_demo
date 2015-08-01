@@ -53,9 +53,9 @@ def main():
         received = binascii.unhexlify(auth)
     except:
         return "hex error", 400
-    print "received"
-    hexdump.hexdump(received)
-    sys.stdout.flush()
+    # print "received"
+    # hexdump.hexdump(received)
+    # sys.stdout.flush()
 
     if len(received) < cipher_block_bytelen * 2:
         return "input too short", 400
@@ -63,9 +63,9 @@ def main():
 
     decryptor = Cipher(cipher(cipher_key), modes.CBC(iv), backend=backend).decryptor()
     decrypted = decryptor.update(ciphertext) + decryptor.finalize()
-    print "decrypted"
-    hexdump.hexdump(decrypted)
-    sys.stdout.flush()
+    # print "decrypted"
+    # hexdump.hexdump(decrypted)
+    # sys.stdout.flush()
 
     unpadder = padding.PKCS7(cipher.block_size).unpadder()
     unpadded = unpadder.update(decrypted)
@@ -73,9 +73,9 @@ def main():
         unpadded += unpadder.finalize()
     except ValueError:
         return "padding error", 400
-    print "unpadded"
-    hexdump.hexdump(unpadded)
-    sys.stdout.flush()
+    # print "unpadded"
+    # hexdump.hexdump(unpadded)
+    # sys.stdout.flush()
 
     try:
         decoded = unpadded.decode('utf-8')
@@ -92,5 +92,6 @@ def main():
         return "Hello user #%d!" % parsed['userid']
 
 if __name__ == "__main__":
-    app.debug = True
+    # app.debug = True
     app.run(host='0.0.0.0', port=8000)
+
